@@ -1,14 +1,40 @@
 import React from 'react'
+import './Form.css'
 
-const Form = () => {
+const Error = (props) => {
+  const { error } = props
   return (
-    <form>
+    <div className='field-container error-container'>
+      <div className='label' />
+      <div className='field'>
+        {error}
+      </div>
+    </div>
+  )
+}
+const Form = (props) => {
+  const {
+    user,
+    handleOnChange,
+    handleOnBlur,
+    handleSubmit,
+    errors
+  } = props
+
+  return (
+    <form onSubmit={handleSubmit} noValidate>
       <div className='field-container'>
         <div className='label'>
-          <label for='title'>Title:</label>
+          <label htmlFor='title'>Title:</label>
         </div>
         <div className='field'>
-          <select id='title' name='title'>
+          <select
+            id='title'
+            name='title'
+            value={user.title}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+          >
             <option value='' />
             <option value='Dr'>Dr</option>
             <option value='Mr'>Mr</option>
@@ -19,38 +45,71 @@ const Form = () => {
           </select>
         </div>
       </div>
+      {errors.title && <Error error={errors.title} />}
       <div className='field-container'>
         <div className='label'>
-          <label for='first-name'>First Name:</label>
+          <label htmlFor='first-name'>First Name:</label>
         </div>
         <div className='field'>
-          <input type='text' id='first-name' name='fist-name' />
+          <input
+            type='text'
+            id='first-name'
+            name='firstName'
+            value={user.firstName}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+          />
         </div>
       </div>
+      {errors.firstName && <Error error={errors.firstName} />}
       <div className='field-container'>
         <div className='label'>
-          <label for='last-name'>Last Name:</label>
+          <label htmlFor='last-name'>Last Name:</label>
         </div>
         <div className='field'>
-          <input type='text' id='last-name' name='last-name' />
+          <input
+            type='text'
+            id='last-name'
+            name='lastName'
+            value={user.lastName}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+          />
         </div>
       </div>
+      {errors.lastName && <Error error={errors.lastName} />}
       <div className='field-container'>
         <div className='label'>
-          <label for='email'>Email:</label>
+          <label htmlFor='email'>Email:</label>
         </div>
         <div className='field'>
-          <input type='email' id='email' name='email' />
+          <input
+            type='email'
+            id='email'
+            name='email'
+            value={user.email}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+          />
         </div>
       </div>
+      {errors.email && <Error error={errors.email} />}
       <div className='field-container'>
         <div className='label'>
-          <label for='password'>Password:</label>
+          <label htmlFor='password'>Password:</label>
         </div>
         <div className='field'>
-          <input type='password' id='password' name='password' />
+          <input
+            type='password'
+            id='password'
+            name='password'
+            value={user.password}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+          />
         </div>
       </div>
+      {errors.password && <Error error={errors.password} />}
       <div className='field-container'>
         <div className='label' />
         <div className='field submit'>
