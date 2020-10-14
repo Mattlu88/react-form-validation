@@ -2,6 +2,21 @@ import React, { useState } from 'react'
 import './App.css'
 import Form from './Form'
 
+const Welcome = (props) => {
+  const { login, setLogin } = props
+
+  const handleLogout = () => {
+    setLogin('')
+  }
+
+  return (
+    <div>
+      <h1>Welcome {login.title} {login.firstName} {login.lastName} </h1>
+      <button onClick={handleLogout}>Log Out</button>
+    </div>
+  )
+}
+
 function App () {
   const initUser = {
     title: '',
@@ -58,6 +73,7 @@ function App () {
   const [user, setUser] = useState(initUser)
   const [touched, setTouched] = useState({})
   const [errors, setErrors] = useState({})
+  const [login, setLogin] = useState('')
 
   const handleOnChange = event => {
     const { name, value } = event.target
@@ -77,12 +93,18 @@ function App () {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log('submit')
     let newErrors = {}
     Object.keys(user).forEach(key => {
       const error = validate[key](user[key])
-      newErrors = { ...newErrors, [key]: error }
+      if (error) {
+        newErrors = { ...newErrors, [key]: error }
+      }
     })
+    if (Object.keys(newErrors).length === 0) {
+      setLogin(user)
+      setUser(initUser)
+      return
+    }
     setErrors(newErrors)
   }
 
@@ -93,13 +115,19 @@ function App () {
           Form validation
         </p>
       </header>
-      <Form
-        user={user}
-        handleOnChange={handleOnChange}
-        handleOnBlur={handleOnBlur}
-        handleSubmit={handleSubmit}
-        errors={errors}
-      />
+      {login &&
+        <Welcome
+          login={login}
+          setLogin={setLogin}
+        />}
+      {!login &&
+        <Form
+          user={user}
+          handleOnChange={handleOnChange}
+          handleOnBlur={handleOnBlur}
+          handleSubmit={handleSubmit}
+          errors={errors}
+        />}
     </div>
   )
 }
