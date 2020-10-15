@@ -1,6 +1,7 @@
 import React from 'react'
 import './Form.css'
 import { navigate } from '@reach/router'
+import Welcome from './Welcome'
 
 const Error = (props) => {
   const { error } = props

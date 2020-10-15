@@ -1,20 +1,6 @@
 import React, { useState } from 'react'
 import Form from './Form'
-
-const Welcome = (props) => {
-  const { login, setLogin } = props
-
-  const handleLogout = () => {
-    setLogin('')
-  }
-
-  return (
-    <div>
-      <h1>Welcome {login.title} {login.firstName} {login.lastName} </h1>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-  )
-}
+import Welcome from './Welcome'
 
 const FormVanilla = (props) => {
   const { initData } = props

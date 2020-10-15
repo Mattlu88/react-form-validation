@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from './Form2'
+import Welcome from './Welcome'
 import { useForm } from 'react-hook-form'
 
 const FormReactHook = (props) => {
   const { register, handleSubmit, errors } = useForm()
+  const [login, setLogin] = useState('')
 
   const notify = (error, fieldName) => {
     let message = ''
@@ -26,12 +28,21 @@ const FormReactHook = (props) => {
   }
 
   return (
-    <Form
-      register={register}
-      handleSubmit={handleSubmit}
-      errors={errors}
-      notify={notify}
-    />
+    <div>
+      {login &&
+        <Welcome
+          login={login}
+          setLogin={setLogin}
+        />}
+      {!login &&
+        <Form
+          register={register}
+          handleSubmit={handleSubmit}
+          errors={errors}
+          notify={notify}
+          setLogin={setLogin}
+        />}
+    </div>
   )
 }
 

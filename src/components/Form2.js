@@ -18,14 +18,15 @@ const Form = props => {
     register,
     handleSubmit,
     errors,
-    notify
+    notify,
+    setLogin
   } = props
 
   const handleClickBack = () => {
     navigate('/')
   }
 
-  const onSubmit = data => console.log(data)
+  const onSubmit = data => setLogin(data)
 
   const rule = {
     title: {
