@@ -1,5 +1,6 @@
 import React from 'react'
 import './Form.css'
+import { navigate } from '@reach/router'
 
 const Error = (props) => {
   const { error } = props
@@ -12,17 +13,44 @@ const Error = (props) => {
     </div>
   )
 }
-const Form = (props) => {
+const Form = props => {
   const {
-    user,
-    handleOnChange,
-    handleOnBlur,
+    register,
     handleSubmit,
-    errors
+    errors,
+    notify
   } = props
 
+  const handleClickBack = () => {
+    navigate('/')
+  }
+
+  const onSubmit = data => console.log(data)
+
+  const rule = {
+    title: {
+      required: true
+    },
+    firstName: {
+      required: true
+    },
+    lastName: {
+      required: true
+    },
+    email: {
+      required: true,
+      pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    },
+    password: {
+      required: true,
+      validate: {
+        validPassword: value => /^(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/.test(value)
+      }
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className='field-container'>
         <div className='label'>
           <label htmlFor='title'>Title:</label>
@@ -31,9 +59,7 @@ const Form = (props) => {
           <select
             id='title'
             name='title'
-            value={user.title}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
+            ref={register(rule.title)}
           >
             <option value='' />
             <option value='Dr'>Dr</option>
@@ -45,7 +71,7 @@ const Form = (props) => {
           </select>
         </div>
       </div>
-      {errors.title && <Error error={errors.title} />}
+      {errors.title && <Error error={notify(errors.title, 'Title')} />}
       <div className='field-container'>
         <div className='label'>
           <label htmlFor='first-name'>First Name:</label>
@@ -55,13 +81,11 @@ const Form = (props) => {
             type='text'
             id='first-name'
             name='firstName'
-            value={user.firstName}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
+            ref={register(rule.firstName)}
           />
         </div>
       </div>
-      {errors.firstName && <Error error={errors.firstName} />}
+      {errors.firstName && <Error error={notify(errors.firstName, 'First Name')} />}
       <div className='field-container'>
         <div className='label'>
           <label htmlFor='last-name'>Last Name:</label>
@@ -71,13 +95,11 @@ const Form = (props) => {
             type='text'
             id='last-name'
             name='lastName'
-            value={user.lastName}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
+            ref={register(rule.lastName)}
           />
         </div>
       </div>
-      {errors.lastName && <Error error={errors.lastName} />}
+      {errors.lastName && <Error error={notify(errors.lastName, 'Last Name')} />}
       <div className='field-container'>
         <div className='label'>
           <label htmlFor='email'>Email:</label>
@@ -87,13 +109,11 @@ const Form = (props) => {
             type='email'
             id='email'
             name='email'
-            value={user.email}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
+            ref={register(rule.email)}
           />
         </div>
       </div>
-      {errors.email && <Error error={errors.email} />}
+      {errors.email && <Error error={notify(errors.email, 'Email')} />}
       <div className='field-container'>
         <div className='label'>
           <label htmlFor='password'>Password:</label>
@@ -103,17 +123,16 @@ const Form = (props) => {
             type='password'
             id='password'
             name='password'
-            value={user.password}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
+            ref={register(rule.password)}
           />
         </div>
       </div>
-      {errors.password && <Error error={errors.password} />}
+      {errors.password && <Error error={notify(errors.password, 'Password')} />}
       <div className='field-container'>
         <div className='label' />
-        <div className='field submit'>
+        <div className='field btn'>
           <input type='submit' value='Sign In' />
+          <input type='button' onClick={handleClickBack} value='Back' />
         </div>
       </div>
     </form>

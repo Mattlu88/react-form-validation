@@ -16,3 +16,24 @@
   color: white;
 }
 
+ul {
+  max-width: 650px;
+  margin: auto;
+  list-style-type: none;
+  text-align: left;
+  padding: 0;
+
+}
+
+li {
+  padding: 1rem;
+}
+
+.link {
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

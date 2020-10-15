@@ -43,6 +43,16 @@ form {
   font-size: 0.8rem;
 }
 
+.field.btn {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.field.btn input {
+  width: 30%;
+  margin-right: 0.5rem;
+}
+
 @media only screen and (min-width: 325px) {
   .field-container .label {
     font-size: 1rem;
@@ -70,7 +80,7 @@ form {
     flex: 3 1 0;
   }
 
-  .field.submit input  {
+  .field.btn input  {
     width: 5rem;
   }
 }
